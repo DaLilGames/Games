@@ -18,6 +18,7 @@ public class PlayScreen implements Screen {
 
     private OurGame game;
     Texture texture;
+    private Hud hud;
 
     private OrthographicCamera gamecam;
     private Viewport gamePort;
@@ -27,7 +28,8 @@ public class PlayScreen implements Screen {
         texture = new Texture("badlogic.jpg");
         gamecam = new OrthographicCamera();
         // change this to switch up how the camera acts on resizing
-        gamePort = new FitViewport(800, 480, gamecam);
+        gamePort = new FitViewport(OurGame.V_WIDTH, OurGame.V_HEIGHT, gamecam);
+        hud = new Hud(game.batch);
 
     }
 
@@ -40,10 +42,8 @@ public class PlayScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(1,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        game.batch.setProjectionMatrix(gamecam.combined);
-        game.batch.begin();
-        game.batch.draw(texture, 0,0);
-        game.batch.end();
+        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
 
     }
 
